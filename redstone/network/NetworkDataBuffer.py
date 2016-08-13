@@ -108,6 +108,18 @@ class NetworkDataBuffer(object):
     def write_json_object(self, json_object):
         self.write_string(dumps(json_object))
 
+    def write_byte_array(self, byte_array):
+        self.set_buffer(self.get_buffer() + self.write_varint(len(byte_array)) + bytes(byte_array))
+
+    def read_byte_array(self):
+        byte_array = []
+
+        for _ in xrange(self.read_varint()):
+            byte_array.append(self.read_from(self.get_offset() + 1))
+            self.set_offset(self.get_offset() + 1)
+
+        return b''.join(byte_array)
+
     def write_varint(self, value):
         result = []
         
