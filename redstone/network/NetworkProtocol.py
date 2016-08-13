@@ -46,21 +46,36 @@ class NetworkProtocol(Protocol):
     def dataReceived(self, data):
         data_buffer = NetworkDataBuffer(data)
 
-        if not data_buffer.get_remaining_size():
+        if data_buffer.get_remaining_size() == 0:
+            self.disconnect()
             return
 
-        packet_length = data_buffer.read_varint()
+        try:
+            packet_length = data_buffer.read_varint()
+        except:
+            self.disconnect()
+            return
 
         if not packet_length:
+            self.disconnect()
             return
 
         # construct a new data buffer with the contents acording to packet_length.
         data_buffer = NetworkDataBuffer(
             data_buffer.read_from(packet_length))
 
-        packet_id = data_buffer.read_varint()
+        if data_buffer.get_remaining_size() == 0:
+            self.disconnect()
+            return
 
-        if not data_buffer.get_remaining_size():
+        try:
+            packet_id = data_buffer.read_varint()
+        except:
+            self.disconnect()
+            return
+
+        if data_buffer.get_remaining_size() == 0:
+            self.disconnect()
             return
 
         # handle the packet acording to the packet_id.

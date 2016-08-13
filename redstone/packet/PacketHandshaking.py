@@ -16,10 +16,14 @@ class PacketHandshaking(IPacketMessage):
         pass
 
     def deserialize(self, protocol, packet_id, data_buffer):
-        protocol_version = data_buffer.read_varint()
-        server_address = data_buffer.read_string()
-        server_port = data_buffer.read_ushort()
-        next_state = data_buffer.read_varint()
+        try:
+            protocol_version = data_buffer.read_varint()
+            server_address = data_buffer.read_string()
+            server_port = data_buffer.read_ushort()
+            next_state = data_buffer.read_varint()
+        except:
+            protocol.disconnect()
+            return
 
         connection_states = [IPacketState.CONNECTION_STATE_HANDSHAKING, IPacketState.CONNECTION_STATE_STATUS, IPacketState.CONNECTION_STATE_PLAY, \
             IPacketState.CONNECTION_STATE_LOGIN]
