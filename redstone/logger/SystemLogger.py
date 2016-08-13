@@ -18,9 +18,9 @@ class SystemLogger(object):
             self.getTimestamp(), message))
 
     def log_warning(self, message):
-        sys.stdout.write('\033[1;32m%s \033[1;38m[WARNING]: \033[1;37m%s\n' % ( \
+        sys.stdout.write('\033[1;32m%s \033[1;31m[WARNING]: \033[1;37m%s\n' % ( \
             self.getTimestamp(), message))
 
     def log_error(self, message):
-        raise SystemLoggerError('\033[1;32m%s \033[1;38m[ERROR]: \033[1;37m%s\n' % ( \
+        raise SystemLoggerError('\033[1;32m%s \033[1;31m[ERROR]: \033[1;37m%s\n' % ( \
             self.getTimestamp(), message))
