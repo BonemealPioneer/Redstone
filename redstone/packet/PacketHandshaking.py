@@ -26,13 +26,13 @@ class PacketHandshaking(IPacketMessage):
                 protocol.CONNECTION_STATE = IPacketState.CONNECTION_STATE_LOGIN
 
                 # handle the indicated packet_id, if one is specified.
-                self.handle_packet(protocol, packet_id, data_buffer)
+                self.dispatched_handle_packet(protocol, packet_id, data_buffer)
                 return
 
         protocol.CONNECTION_STATE = next_state
 
         # handle the indicated packet_id, if one is specified.
-        self.handle_packet(protocol, packet_id, data_buffer)
+        self.dispatched_handle_packet(protocol, packet_id, data_buffer)
 
-    def handle_packet(self, protocol, packet_id, data_buffer):
+    def dispatched_handle_packet(self, protocol, packet_id, data_buffer):
         protocol.handle_packet(IPacketDirection.downstream, protocol.CONNECTION_STATE, packet_id, data_buffer)

@@ -2,16 +2,18 @@ from twisted.internet import reactor
 from twisted.internet.protocol import Factory
 from redstone.network.NetworkProtocol import NetworkProtocol
 from redstone.util.ObjectListRegistry import ObjectListRegistry
+from callbacks import supports_callbacks
 
 class NetworkFactory(Factory):
     """
     Class as the server factory repository
     """
 
+    reactor = reactor
     protocol = NetworkProtocol
 
     def __init__(self):
-        self.protocols = ObjectListRegistry()
+        self.protocols = []
 
     def startFactory(self):
         pass
@@ -20,11 +22,23 @@ class NetworkFactory(Factory):
         pass
 
     def register_protocol(self, protocol):
-        self.protocols.register_object(protocol)
+        if protocol not in self.protocols:
+            self.protocols.append(protocol)
 
     def unregister_protocol(self, protocol):
-        self.protocols.unregister_object(protocol)
+        if protocol in self.protocols:
+            self.protocols.remove(protocol)
+
+    def broadcast_packet(self, packet_id, data_buffer):
+        for protocol in self.protocols:
+
+            # ensure the client is capable of recieving other updates.
+            if not protocol.get_is_authenicated():
+                return
+
+            # make sure the client can actually send this packet, before sending it.
+            protocol.append_send_packet(packet_id, data_buffer)
 
     def run_forever(self, port_address):
-        reactor.listenTCP(port_address, self)
-        reactor.run()
+        self.reactor.listenTCP(port_address, self)
+        self.reactor.run()

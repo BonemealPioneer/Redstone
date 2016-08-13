@@ -1,7 +1,7 @@
 
 class IPacketState(object):
     """
-    This serves as an enum for connection state
+    This serves as an enum for connection states
     """
 
     CONNECTION_STATE_HANDSHAKING = 0

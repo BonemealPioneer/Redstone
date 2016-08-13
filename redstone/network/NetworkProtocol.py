@@ -1,5 +1,4 @@
 from twisted.internet.protocol import Protocol
-
 from redstone.network.NetworkDataBuffer import NetworkDataBuffer
 from redstone.packet.IPacketDispatcher import IPacketDispatcher
 from redstone.packet.IPacketDirection import IPacketDirection

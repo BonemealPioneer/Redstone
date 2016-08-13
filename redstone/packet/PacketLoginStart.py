@@ -14,4 +14,5 @@ class PacketLoginStart(IPacketMessage):
         pass
 
     def deserialize(self, protocol, data_buffer):
-        pass
+        player_username = data_buffer.read_string()
+        print player_username
