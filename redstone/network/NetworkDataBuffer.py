@@ -115,11 +115,11 @@ class NetworkDataBuffer(object):
             towrite = value & 0x7F
             value >>= 7
 
-            if value:
-                result.append(self.write_bytes('<B', towrite | 0x80))
-            else:
+            if not value:
                 result.append(self.write_bytes('<B', towrite))
                 break
+            
+            result.append(self.write_bytes('<B', towrite | 0x80))
         
         result = b''.join(result)
         self.set_buffer(self.get_buffer() + result)
