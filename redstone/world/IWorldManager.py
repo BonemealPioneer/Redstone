@@ -19,6 +19,14 @@ class IWorldManager(object):
 
         return False
 
+    def get_player_in_world(self, player_name, world_name):
+        if player_name in self.loaded_worlds[world_name \
+            ].players.keys():
+
+            return True
+
+        return False
+
     def load_world(self):
         """
         Stores as {World Name}: World Instance

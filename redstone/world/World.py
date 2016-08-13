@@ -5,11 +5,18 @@ class World(object):
     def __init__(self):
         super(World, self).__init__()
 
+        self.players = {}
         self.world_name = ''
         self.world_time_max = 24000
         self.world_time_delay = 0.05
         self.world_time = 0
         self.world_age = 0
+
+    def add_player(self, player):
+        pass
+
+    def remove_player(self, player):
+        pass
 
     def set_world_name(self, world_name):
         self.world_name = world_name
