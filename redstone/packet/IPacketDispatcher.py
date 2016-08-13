@@ -81,7 +81,7 @@ class IPacketDispatcher(object):
 
         # custom handle for handshaking connection state including the packet_id.
         if connection_state is IPacketState.CONNECTION_STATE_HANDSHAKING:
-            self.packet_handlers[direction][connection_state][packet_id].deserialize(
+            self.packet_handlers[direction][connection_state][packet_id].deserialize( \
                 self.protocol, packet_id, data_buffer)
             
             return
