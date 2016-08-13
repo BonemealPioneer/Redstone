@@ -1,0 +1,3 @@
+
+class SystemLoggerError(Exception):
+    pass

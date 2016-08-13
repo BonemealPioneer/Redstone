@@ -35,7 +35,7 @@ class NetworkProtocol(Protocol):
 
     def send_packet(self, packet_id, _data_buffer):
         data_buffer = NetworkDataBuffer()
-        data_buffer.write_varint(len(_data_buffer.get_buffer()) + 1)
+        data_buffer.write_varint(_data_buffer.get_length() + 1)
         data_buffer.write_varint(packet_id)
         data_buffer.set_buffer(data_buffer.get_buffer() + _data_buffer.get_buffer())
         self.transport.write(data_buffer.get_buffer())

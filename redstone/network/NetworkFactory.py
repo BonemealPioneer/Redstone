@@ -14,8 +14,13 @@ class NetworkFactory(Factory):
     def __init__(self):
         self.protocols = []
 
+    @supports_callbacks
     def startFactory(self):
-        pass
+        self.startFactory.add_callback(self.startupDone)
+        systemLogger.log_info('Starting Redstone minecraft server...')
+
+    def startupDone(self):
+        systemLogger.log_info('Server initialized, waiting for connections.')
 
     def stopFactory(self):
         pass

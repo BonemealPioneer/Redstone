@@ -39,6 +39,9 @@ class NetworkDataBuffer(object):
         self.set_offset(self.get_offset() + calcsize('%s' % fmt))
         return unpacked_bytes
 
+    def get_length(self):
+        return len(self.get_buffer())
+
     def get_remaining_size(self):
         return len(self.get_buffer()[self.get_offset():])
 

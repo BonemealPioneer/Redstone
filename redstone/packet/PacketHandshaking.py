@@ -21,6 +21,13 @@ class PacketHandshaking(IPacketMessage):
         server_port = data_buffer.read_ushort()
         next_state = data_buffer.read_varint()
 
+        connection_states = [IPacketState.CONNECTION_STATE_HANDSHAKING, IPacketState.CONNECTION_STATE_STATUS, IPacketState.CONNECTION_STATE_PLAY, \
+            IPacketState.CONNECTION_STATE_LOGIN]
+
+        if next_state not in connection_states:
+            # recieved an invalid state, don't switch target states.
+            return
+        
         if next_state is IPacketState.CONNECTION_STATE_PLAY:
             if not protocol.get_is_authenicated():
                 protocol.CONNECTION_STATE = IPacketState.CONNECTION_STATE_LOGIN
