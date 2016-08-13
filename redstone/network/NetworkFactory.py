@@ -1,7 +1,6 @@
 from twisted.internet import reactor
 from twisted.internet.protocol import Factory
 from redstone.network.NetworkProtocol import NetworkProtocol
-from redstone.util.ObjectListRegistry import ObjectListRegistry
 from callbacks import supports_callbacks
 
 class NetworkFactory(Factory):
