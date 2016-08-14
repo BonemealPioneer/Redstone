@@ -16,6 +16,9 @@ class NetworkDataBuffer(object):
 
         self._offset = 0
 
+    def add_raw_bytes(self, bytes):
+        self._buffer += bytes
+
     def get_buffer(self):
         return self._buffer
 
@@ -135,10 +138,8 @@ class NetworkDataBuffer(object):
                 break
             
             result.append(self.write_bytes('<B', towrite | 0x80))
-        
-        result = b''.join(result)
-        self.set_buffer(self.get_buffer() + result)
-        return result
+
+        return b''.join(result)
 
     def read_varint(self):
         shift = 0

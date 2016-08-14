@@ -5,7 +5,7 @@ class PacketEncryptionResponse(IPacketMessage):
     A packet handler that recieves encryption response from the client
     """
 
-    PACKET_ID = 0x00
+    PACKET_ID = 0x01
 
     def __init__(self):
         IPacketMessage.__init__(self)

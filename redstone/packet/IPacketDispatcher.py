@@ -99,3 +99,5 @@ class IPacketDispatcher(object):
         """
         Discards unused packets by packet_id
         """
+
+        systemLogger.log_debug('Failed to handle packet with id: %d!' % packet_id)
