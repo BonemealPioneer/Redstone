@@ -32,15 +32,21 @@ class IPacketDispatcher(object):
                 PacketRequest.PACKET_ID: PacketRequest(),
                 PacketPing.PACKET_ID: PacketPing(),
             },
+            IPacketState.CONNECTION_STATE_PLAY: {
+            },
             IPacketState.CONNECTION_STATE_LOGIN: {
                 PacketLoginStart.PACKET_ID: PacketLoginStart(),
                 PacketEncryptionResponse.PACKET_ID: PacketEncryptionResponse(),
             },
         },
         IPacketDirection.upstream: {
+            IPacketState.CONNECTION_STATE_HANDSHAKING: {
+            },
             IPacketState.CONNECTION_STATE_STATUS: {
                 PacketResponse.PACKET_ID: PacketResponse(),
                 PacketPong.PACKET_ID: PacketPong(),
+            },
+            IPacketState.CONNECTION_STATE_PLAY: {
             },
             IPacketState.CONNECTION_STATE_LOGIN: {
                 PacketDisconnect.PACKET_ID: PacketDisconnect(),
@@ -86,7 +92,7 @@ class IPacketDispatcher(object):
             
             return
 
-        self.packet_handlers[direction][connection_state][packet_id].deserialize(
+        self.packet_handlers[direction][connection_state][packet_id].deserialize( \
             self.protocol, data_buffer)
 
     def discard_packet(self, packet_id):

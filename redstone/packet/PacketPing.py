@@ -16,7 +16,11 @@ class PacketPing(IPacketMessage):
         pass
 
     def deserialize(self, protocol, data_buffer):
-        timestamp = data_buffer.read_long()
+        try:
+            timestamp = data_buffer.read_long()
+        except:
+            protocol.disconnect()
+            return
 
         if not timestamp:
             return
