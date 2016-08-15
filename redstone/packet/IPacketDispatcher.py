@@ -95,6 +95,8 @@ class IPacketDispatcher(object):
         self.packet_handlers[direction][connection_state][packet_id].deserialize( \
             self.protocol, data_buffer)
 
+        systemLogger.log_debug('Handling packet with id %d!' % packet_id)
+
     def discard_packet(self, packet_id):
         """
         Discards unused packets by packet_id

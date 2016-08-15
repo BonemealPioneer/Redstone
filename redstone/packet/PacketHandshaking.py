@@ -36,8 +36,15 @@ class PacketHandshaking(IPacketMessage):
             if not protocol.get_is_authenicated():
                 protocol.CONNECTION_STATE = IPacketState.CONNECTION_STATE_LOGIN
 
-                # handle the indicated packet_id, if one is specified.
-                self.dispatched_handle_packet(protocol, packet_id, data_buffer)
+                # sometimes the packets, handshake and login start are as one packet, we need to check and if so
+                # just handle the packet normally.
+                if not data_buffer.get_remaining_size():
+                    return
+                
+                # works for now...
+                protocol.handle_data_recieved(
+                    data_buffer.get_remaining_bytes())
+                
                 return
 
         protocol.CONNECTION_STATE = next_state
